@@ -66,20 +66,21 @@ function attachToolActionButtons() {
 }
 
 function getDownloadFormats(toolName) {
+  const allFormats = ['ZIP', 'PDF', 'DOC', 'DOCX', 'PNG', 'JPG', 'TXT'];
   const formatMap = {
-    merge: ['PDF', 'ZIP'],
-    split: ['PDF', 'ZIP'],
-    compress: ['PDF', 'ZIP'],
-    'pdf-to-word': ['DOCX', 'PDF', 'TXT'],
-    'word-to-pdf': ['PDF', 'DOCX'],
+    merge: ['ZIP', 'PDF'],
+    split: ['ZIP', 'PDF'],
+    compress: ['ZIP', 'PDF'],
+    'pdf-to-word': ['DOCX', 'DOC', 'PDF', 'TXT', 'ZIP'],
+    'word-to-pdf': ['PDF', 'DOCX', 'ZIP'],
     'pdf-to-image': ['PNG', 'JPG', 'ZIP'],
-    'image-to-pdf': ['PDF', 'ZIP'],
+    'image-to-pdf': ['PDF', 'ZIP', 'PNG', 'JPG'],
     rotate: ['PDF', 'ZIP'],
     unlock: ['PDF', 'ZIP'],
     watermark: ['PDF', 'ZIP'],
   };
 
-  return formatMap[toolName] || ['PDF'];
+  return [...new Set([...(formatMap[toolName] || allFormats), ...allFormats])];
 }
 
 function openDownloadModal() {
