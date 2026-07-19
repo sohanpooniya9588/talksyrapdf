@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Watermark PDF | Talksyra PDF Studio</title>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <a href="../index.html" class="brand">Talksyra <span>PDF Studio</span></a>
+        <nav>
+          <a href="../index.html">Home</a>
+          <a href="../index.html#tools">All Tools</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container tool-page">
+      <a class="back-link" href="../index.html">← Back to All Tools</a>
+      <h1>Watermark PDF</h1>
+      <p>Add a draft, confidential, or custom branded watermark.</p>
+
+      <section class="tool-panel">
+        <form>
+          <label>
+            Upload PDF
+            <input type="file" accept=".pdf" />
+          </label>
+          <label>
+            Watermark text
+            <input type="text" placeholder="CONFIDENTIAL" />
+          </label>
+          <label>
+            Opacity
+            <select>
+              <option>25%</option>
+              <option>50%</option>
+              <option>75%</option>
+            </select>
+          </label>
+          <button type="submit">Add Watermark</button>
+        </form>
+        <div class="status"></div>
+      </section>
+    </main>
+
+    <script src="../script.js"></script>
+  </body>
+</html>

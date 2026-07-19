@@ -1,0 +1,293 @@
+:root {
+  --bg: #07111f;
+  --bg-soft: #0b1830;
+  --card: rgba(13, 26, 52, 0.88);
+  --text: #ecf4ff;
+  --muted: #a9b8d3;
+  --accent: #63f0cc;
+  --accent-2: #7b8cff;
+  --border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: radial-gradient(circle at top left, #0d1d3a, #07111f 55%);
+  color: var(--text);
+}
+
+.container {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(14px);
+  background: rgba(7, 17, 31, 0.82);
+  border-bottom: 1px solid var(--border);
+  z-index: 50;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+}
+
+.brand {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+.brand span {
+  color: var(--accent);
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+nav a,
+.footer a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.hero {
+  padding: 76px 0 56px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(2.6rem, 5vw, 4.5rem);
+  line-height: 1.05;
+  margin-bottom: 18px;
+}
+
+.hero-copy,
+.feature-card p,
+.tool-card p,
+.tool-page p,
+.faq-box p {
+  color: var(--muted);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  margin: 24px 0 28px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), #8efff1);
+  color: #082032;
+}
+
+.btn-secondary {
+  border: 1px solid var(--border);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.stats strong {
+  display: block;
+  font-size: 1.4rem;
+}
+
+.stats span {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.glass-card,
+.tool-card,
+.feature-card,
+.tool-panel,
+.faq-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+}
+
+.glass-card {
+  padding: 28px;
+}
+
+.glass-card ul {
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.section {
+  padding: 72px 0;
+}
+
+.alt-section {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.section-head {
+  margin-bottom: 24px;
+}
+
+.tool-grid,
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.tool-card,
+.feature-card {
+  display: block;
+  padding: 22px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.tool-card:hover,
+.feature-card:hover {
+  transform: translateY(-3px);
+  transition: 0.2s ease;
+}
+
+.tool-page {
+  padding: 60px 0;
+}
+
+.back-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.tool-panel {
+  padding: 28px;
+  margin-top: 24px;
+}
+
+.tool-panel form {
+  display: grid;
+  gap: 12px;
+}
+
+label {
+  display: grid;
+  gap: 8px;
+  font-weight: 600;
+}
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+input[type="file"],
+textarea,
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), #88f5ff);
+  color: #082032;
+}
+
+.status {
+  margin-top: 12px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.footer {
+  padding: 20px 0 44px;
+}
+
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+  padding-top: 18px;
+}
+
+@media (max-width: 860px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  nav {
+    display: none;
+  }
+}

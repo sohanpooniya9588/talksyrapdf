@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Talksyra PDF Studio</title>
+    <meta
+      name="description"
+      content="All-in-one PDF tools website with separate pages for PDF conversion, merge, split, compress, watermark, unlock and more."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <a href="index.html" class="brand">Talksyra <span>PDF Studio</span></a>
+        <nav>
+          <a href="#tools">Tools</a>
+          <a href="#why">Why Us</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow">Cloudflare-ready PDF suite</p>
+            <h1>One website for every PDF task you need.</h1>
+            <p class="hero-copy">
+              Merge, split, compress, rotate, unlock, watermark, convert DOCX/Images to PDF,
+              and more — all under one premium PDF platform built for modern deployment.
+            </p>
+            <div class="hero-actions">
+              <a href="#tools" class="btn btn-primary">Explore Tools</a>
+              <a href="tools/merge.html" class="btn btn-secondary">Try Merge PDF</a>
+            </div>
+            <div class="stats">
+              <div><strong>12+</strong><span>Expert tools</span></div>
+              <div><strong>1</strong><span>Single platform</span></div>
+              <div><strong>100%</strong><span>Static asset friendly</span></div>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="glass-card">
+              <h3>Popular actions</h3>
+              <ul>
+                <li>PDF to Word</li>
+                <li>Word to PDF</li>
+                <li>Image to PDF</li>
+                <li>Compress PDF</li>
+                <li>Split PDF</li>
+                <li>Merge PDF</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tools" class="section">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">All PDF tools</p>
+            <h2>Choose your converter</h2>
+          </div>
+          <div class="tool-grid">
+            <a class="tool-card" href="tools/merge.html">
+              <h3>Merge PDF</h3>
+              <p>Combine multiple PDFs into one clean file.</p>
+            </a>
+            <a class="tool-card" href="tools/split.html">
+              <h3>Split PDF</h3>
+              <p>Break a large document into smaller pages or sections.</p>
+            </a>
+            <a class="tool-card" href="tools/compress.html">
+              <h3>Compress PDF</h3>
+              <p>Reduce file size while preserving readability.</p>
+            </a>
+            <a class="tool-card" href="tools/convert-word.html">
+              <h3>PDF to Word</h3>
+              <p>Convert PDF content into editable DOCX output.</p>
+            </a>
+            <a class="tool-card" href="tools/word-to-pdf.html">
+              <h3>Word to PDF</h3>
+              <p>Turn DOC / DOCX files into a polished PDF instantly.</p>
+            </a>
+            <a class="tool-card" href="tools/pdf-to-image.html">
+              <h3>PDF to Image</h3>
+              <p>Extract pages into JPG or PNG for sharing and previews.</p>
+            </a>
+            <a class="tool-card" href="tools/image-to-pdf.html">
+              <h3>Image to PDF</h3>
+              <p>Turn JPG/PNG images into a ready-to-share PDF.</p>
+            </a>
+            <a class="tool-card" href="tools/rotate.html">
+              <h3>Rotate PDF</h3>
+              <p>Rotate pages to make files print-ready.</p>
+            </a>
+            <a class="tool-card" href="tools/unlock.html">
+              <h3>Unlock PDF</h3>
+              <p>Remove restrictions and access protected documents.</p>
+            </a>
+            <a class="tool-card" href="tools/watermark.html">
+              <h3>Watermark PDF</h3>
+              <p>Add confidential, draft, or branded marks instantly.</p>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="why" class="section alt-section">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow">Why this layout</p>
+            <h2>Built for cloud deployment and fast hosting</h2>
+          </div>
+          <div class="features-grid">
+            <article class="feature-card">
+              <h3>Static-first</h3>
+              <p>Each tool has its own page so SEO, navigation, and user flow remain clean.</p>
+            </article>
+            <article class="feature-card">
+              <h3>Cloudflare friendly</h3>
+              <p>Frontend is lightweight and compatible with Workers + Assets deployment.</p>
+            </article>
+            <article class="feature-card">
+              <h3>Conversion-ready</h3>
+              <p>It is structured to connect with backend workers or APIs for actual document processing.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" class="section">
+        <div class="container faq-box">
+          <h2>What is included?</h2>
+          <p>
+            This starter gives you a polished PDF suite UI, separate tool pages, and deployment-ready static assets.
+            Later, you can attach real file conversion APIs behind each tool page.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-row">
+        <p>Talksyra PDF Studio • Cloudflare-ready website starter</p>
+        <a href="#top">Back to top</a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
