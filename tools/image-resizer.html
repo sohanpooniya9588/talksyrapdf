@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Resizer | Talksyra PDF Studio</title>
+    <meta name="description" content="Resize image dimensions quickly for web, social, or print-ready output." />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <a href="../index.html" class="brand">Talksyra <span>PDF Studio</span></a>
+        <nav>
+          <a href="../index.html">Home</a>
+          <a href="../index.html#tools">All Tools</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container tool-page">
+      <a class="back-link" href="../index.html">← Back to All Tools</a>
+      <h1>Image Resizer</h1>
+      <p>Resize image dimensions quickly for web, social, or print-ready output.</p>
+
+      <section class="tool-panel">
+        <form data-tool="image-resize" data-target="image-resizer">
+          <label class="upload-box">
+            <span class="upload-title">Drop your file here</span>
+            <span class="upload-subtitle">Click to choose your image/* file</span>
+            <input type="file" accept="image/*" />
+          </label>
+          <div class="selected-file-name">No file selected</div>
+          
+          <label>
+            Target size
+            <select>
+              <option value="1200">1200 px</option><option value="1600">1600 px</option><option value="900">900 px</option>
+            </select>
+          </label>
+          <button type="submit">Resize Image</button>
+        </form>
+        <div class="status"></div>
+        <div class="tool-actions">
+          <button type="button" class="download-result-btn" hidden>Download Result</button>
+          <button type="button" class="reset-result-btn">Reset</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="../script.js"></script>
+  </body>
+</html>

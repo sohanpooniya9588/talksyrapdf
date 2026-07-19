@@ -540,6 +540,16 @@ button:hover {
   font-weight: 700;
 }
 
+.result-box {
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(8, 181, 143, 0.08);
+  border: 1px solid rgba(8, 181, 143, 0.28);
+  color: var(--text);
+  font-weight: 700;
+}
+
 .tool-actions {
   display: flex;
   gap: 12px;

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WEBP to JPEG | Talksyra PDF Studio</title>
+    <meta name="description" content="Convert WEBP images into JPEG format quickly and professionally." />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <a href="../index.html" class="brand">Talksyra <span>PDF Studio</span></a>
+        <nav>
+          <a href="../index.html">Home</a>
+          <a href="../index.html#tools">All Tools</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container tool-page">
+      <a class="back-link" href="../index.html">← Back to All Tools</a>
+      <h1>WEBP to JPEG</h1>
+      <p>Convert WEBP images into JPEG format quickly and professionally.</p>
+
+      <section class="tool-panel">
+        <form data-tool="image-convert" data-target="webp-to-jpeg">
+          <label class="upload-box">
+            <span class="upload-title">Drop your file here</span>
+            <span class="upload-subtitle">Click to choose your webp file</span>
+            <input type="file" accept=".webp" />
+          </label>
+          <div class="selected-file-name">No file selected</div>
+          
+          <label>
+            Output format
+            <select>
+              <option value="jpeg">JPEG</option>
+            </select>
+          </label>
+          <button type="submit">Convert to JPEG</button>
+        </form>
+        <div class="status"></div>
+        <div class="tool-actions">
+          <button type="button" class="download-result-btn" hidden>Download Result</button>
+          <button type="button" class="reset-result-btn">Reset</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="../script.js"></script>
+  </body>
+</html>

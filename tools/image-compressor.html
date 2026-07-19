@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Compressor | Talksyra PDF Studio</title>
+    <meta name="description" content="Reduce image file size professionally while keeping quality as high as possible." />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <a href="../index.html" class="brand">Talksyra <span>PDF Studio</span></a>
+        <nav>
+          <a href="../index.html">Home</a>
+          <a href="../index.html#tools">All Tools</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container tool-page">
+      <a class="back-link" href="../index.html">← Back to All Tools</a>
+      <h1>Image Compressor</h1>
+      <p>Reduce image file size professionally while keeping quality as high as possible.</p>
+
+      <section class="tool-panel">
+        <form data-tool="image-compress" data-target="image-compressor">
+          <label class="upload-box">
+            <span class="upload-title">Drop your file here</span>
+            <span class="upload-subtitle">Click to choose your image/* file</span>
+            <input type="file" accept="image/*" />
+          </label>
+          <div class="selected-file-name">No file selected</div>
+          
+          <label>
+            Output quality
+            <select>
+              <option value="0.6">Balanced</option><option value="0.4">Smaller size</option><option value="0.8">High quality</option>
+            </select>
+          </label>
+          <button type="submit">Compress Image</button>
+        </form>
+        <div class="status"></div>
+        <div class="tool-actions">
+          <button type="button" class="download-result-btn" hidden>Download Result</button>
+          <button type="button" class="reset-result-btn">Reset</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="../script.js"></script>
+  </body>
+</html>

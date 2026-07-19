@@ -1,10 +1,303 @@
 const form = document.querySelector('form');
 const statusBox = document.querySelector('.status');
+const resultBox = document.querySelector('.result-box');
 let pendingDownload = null;
 
 function setStatus(message) {
   if (statusBox) {
     statusBox.textContent = message;
+  }
+}
+
+function setResult(message) {
+  if (resultBox) {
+    resultBox.hidden = false;
+    resultBox.textContent = message;
+  }
+}
+
+function getFormValues(formElement) {
+  const values = {};
+
+  formElement.querySelectorAll('input, select, textarea').forEach((field) => {
+    const key = field.name || field.id;
+    if (!key) {
+      return;
+    }
+
+    values[key] = field.type === 'number' ? Number(field.value) : field.value;
+  });
+
+  return values;
+}
+
+function roundNumber(value) {
+  if (!Number.isFinite(value)) {
+    return value;
+  }
+
+  return Number(value.toFixed(2));
+}
+
+function safeCalcAge(birthDate) {
+  const today = new Date();
+  const birth = new Date(birthDate);
+  if (Number.isNaN(birth.getTime())) {
+    return 'Please enter a valid birth date.';
+  }
+
+  let years = today.getFullYear() - birth.getFullYear();
+  let months = today.getMonth() - birth.getMonth();
+  let days = today.getDate() - birth.getDate();
+
+  if (days < 0) {
+    months -= 1;
+    days += 30;
+  }
+
+  if (months < 0) {
+    years -= 1;
+    months += 12;
+  }
+
+  return `Age: ${years} years, ${months} months, ${days} days`;
+}
+
+function calculateResult(calcType, values) {
+  switch (calcType) {
+    case 'age':
+      return safeCalcAge(values.birthDate);
+    case 'bmi': {
+      const weight = Number(values.weight);
+      const height = Number(values.height) / 100;
+      const bmi = weight / (height * height);
+      return `BMI: ${roundNumber(bmi)}`;
+    }
+    case 'percentage': {
+      const part = Number(values.part);
+      const total = Number(values.total);
+      const percentage = total ? (part / total) * 100 : 0;
+      return `Percentage: ${roundNumber(percentage)}%`;
+    }
+    case 'discount': {
+      const price = Number(values.price);
+      const discount = Number(values.discount);
+      const discounted = price - (price * discount) / 100;
+      return `Discounted price: ${roundNumber(discounted)}`;
+    }
+    case 'tip': {
+      const bill = Number(values.bill);
+      const tip = Number(values.tip);
+      const tipValue = (bill * tip) / 100;
+      return `Tip amount: ${roundNumber(tipValue)} | Total: ${roundNumber(bill + tipValue)}`;
+    }
+    case 'simple-interest': {
+      const principal = Number(values.principal);
+      const rate = Number(values.rate);
+      const time = Number(values.time);
+      const interest = (principal * rate * time) / 100;
+      return `Simple interest: ${roundNumber(interest)}`;
+    }
+    case 'compound-interest': {
+      const principal = Number(values.principal);
+      const rate = Number(values.rate) / 100;
+      const time = Number(values.time);
+      const amount = principal * Math.pow(1 + rate, time);
+      return `Compound amount: ${roundNumber(amount)}`;
+    }
+    case 'loan-emi': {
+      const principal = Number(values.principal);
+      const rate = Number(values.rate) / 1200;
+      const months = Number(values.months);
+      const emi = rate === 0 ? principal / months : (principal * rate * Math.pow(1 + rate, months)) / (Math.pow(1 + rate, months) - 1);
+      return `EMI: ${roundNumber(emi)}`;
+    }
+    case 'salary-hourly': {
+      const salary = Number(values.salary);
+      const weeks = Number(values.weeks || 52);
+      const hours = Number(values.hours || 40);
+      const hourly = salary / (weeks * hours);
+      return `Hourly pay: ${roundNumber(hourly)}`;
+    }
+    case 'date-diff': {
+      const start = new Date(values.startDate);
+      const end = new Date(values.endDate);
+      const diff = Math.max(0, Math.round((end - start) / (1000 * 60 * 60 * 24)));
+      return `Day difference: ${diff}`;
+    }
+    case 'speed': {
+      const distance = Number(values.distance);
+      const time = Number(values.time);
+      return `Speed: ${roundNumber(distance / time)}`;
+    }
+    case 'area-rectangle': {
+      return `Area: ${roundNumber(Number(values.length) * Number(values.width))}`;
+    }
+    case 'triangle-area': {
+      return `Area: ${roundNumber((Number(values.base) * Number(values.height)) / 2)}`;
+    }
+    case 'circle-area': {
+      return `Area: ${roundNumber(Math.PI * Number(values.radius) * Number(values.radius))}`;
+    }
+    case 'cube-volume': {
+      return `Volume: ${roundNumber(Math.pow(Number(values.side), 3))}`;
+    }
+    case 'cylinder-volume': {
+      return `Volume: ${roundNumber(Math.PI * Math.pow(Number(values.radius), 2) * Number(values.height))}`;
+    }
+    case 'profit-margin': {
+      const cost = Number(values.cost);
+      const revenue = Number(values.revenue);
+      const margin = revenue ? ((revenue - cost) / revenue) * 100 : 0;
+      return `Profit margin: ${roundNumber(margin)}%`;
+    }
+    case 'tax': {
+      const amount = Number(values.amount);
+      const rate = Number(values.rate);
+      return `Tax amount: ${roundNumber((amount * rate) / 100)} | Total: ${roundNumber(amount + (amount * rate) / 100)}`;
+    }
+    case 'gst': {
+      const amount = Number(values.amount);
+      const rate = Number(values.rate);
+      return `GST amount: ${roundNumber((amount * rate) / 100)} | Total: ${roundNumber(amount + (amount * rate) / 100)}`;
+    }
+    case 'interest-rate': {
+      const amount = Number(values.amount);
+      const rate = Number(values.rate);
+      return `Interest: ${roundNumber((amount * rate) / 100)}`;
+    }
+    case 'ratio': {
+      const a = Number(values.valueA);
+      const b = Number(values.valueB);
+      if (!a || !b) {
+        return 'Ratio requires both values.';
+      }
+      const gcd = (x, y) => (y === 0 ? x : gcd(y, x % y));
+      const divisor = gcd(Math.abs(a), Math.abs(b));
+      return `Ratio: ${roundNumber(a / divisor)}:${roundNumber(b / divisor)}`;
+    }
+    case 'grade': {
+      const marks = Number(values.marks);
+      const total = Number(values.total);
+      const grade = total ? (marks / total) * 100 : 0;
+      return `Grade: ${roundNumber(grade)}%`;
+    }
+    case 'pixel-size': {
+      const width = Number(values.widthPx);
+      const height = Number(values.heightPx);
+      const dpi = Number(values.dpi);
+      return `Physical size: ${roundNumber((width / dpi) * 2.54)} cm x ${roundNumber((height / dpi) * 2.54)} cm`;
+    }
+    case 'work-hours': {
+      const start = new Date(`2020-01-01T${values.startTime}`);
+      const end = new Date(`2020-01-01T${values.endTime}`);
+      const hours = Math.max(0, (end - start) / (1000 * 60 * 60));
+      return `Work hours: ${roundNumber(hours)}`;
+    }
+    case 'fuel-cost': {
+      const distance = Number(values.distance);
+      const mileage = Number(values.mileage);
+      const price = Number(values.price);
+      return `Fuel cost: ${roundNumber((distance / mileage) * price)}`;
+    }
+    case 'weight-convert': {
+      const kg = Number(values.kg);
+      return `Pounds: ${roundNumber(kg * 2.20462)} | Grams: ${roundNumber(kg * 1000)}`;
+    }
+    case 'length-convert': {
+      const meters = Number(values.meters);
+      return `Feet: ${roundNumber(meters * 3.28084)} | Inches: ${roundNumber(meters * 39.3701)}`;
+    }
+    case 'temperature-convert': {
+      const celsius = Number(values.celsius);
+      return `Fahrenheit: ${roundNumber((celsius * 9) / 5 + 32)} | Kelvin: ${roundNumber(celsius + 273.15)}`;
+    }
+    case 'data-size': {
+      const mb = Number(values.mb);
+      return `GB: ${roundNumber(mb / 1024)} | TB: ${roundNumber(mb / 1024 / 1024)}`;
+    }
+    case 'daily-budget': {
+      const budget = Number(values.budget);
+      const days = Number(values.days);
+      return `Daily budget: ${roundNumber(budget / days)}`;
+    }
+    case 'unit-price': {
+      const price = Number(values.price);
+      const quantity = Number(values.quantity);
+      return `Unit price: ${roundNumber(price / quantity)}`;
+    }
+    case 'savings-goal': {
+      const goal = Number(values.goal);
+      const months = Number(values.months);
+      return `Monthly savings: ${roundNumber(goal / months)}`;
+    }
+    case 'break-even': {
+      const fixedCost = Number(values.fixedCost);
+      const contribution = Number(values.contribution);
+      return `Break-even units: ${roundNumber(fixedCost / contribution)}`;
+    }
+    case 'net-pay': {
+      const gross = Number(values.gross);
+      const deductions = Number(values.deductions);
+      return `Net pay: ${roundNumber(gross - deductions)}`;
+    }
+    case 'co2-footprint': {
+      const distance = Number(values.distance);
+      const fuel = Number(values.fuel);
+      return `CO2 estimate: ${roundNumber(distance * fuel * 2.31)}`;
+    }
+    case 'heart-rate-zone': {
+      const age = Number(values.age);
+      const resting = Number(values.resting);
+      const max = 220 - age;
+      return `Target zone: ${roundNumber((max - resting) * 0.6 + resting)} - ${roundNumber((max - resting) * 0.8 + resting)}`;
+    }
+    case 'credit-payoff': {
+      const balance = Number(values.balance);
+      const payment = Number(values.payment);
+      return `Payoff months: ${roundNumber(balance / payment)}`;
+    }
+    case 'sleep': {
+      const wakeTime = new Date(`2020-01-01T${values.wakeTime}`);
+      const cycles = Number(values.cycles);
+      const sleepHours = cycles * 1.5;
+      return `Suggested sleep time: ${new Date(wakeTime.getTime() - sleepHours * 3600 * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    }
+    case 'average': {
+      const numbers = String(values.numbers).split(',').map(Number).filter((v) => !Number.isNaN(v));
+      return `Average: ${roundNumber(numbers.reduce((sum, item) => sum + item, 0) / Math.max(numbers.length, 1))}`;
+    }
+    case 'sum': {
+      const numbers = String(values.numbers).split(',').map(Number).filter((v) => !Number.isNaN(v));
+      return `Sum: ${roundNumber(numbers.reduce((sum, item) => sum + item, 0))}`;
+    }
+    case 'product': {
+      const numbers = String(values.numbers).split(',').map(Number).filter((v) => !Number.isNaN(v));
+      return `Product: ${roundNumber(numbers.reduce((product, item) => product * item, 1))}`;
+    }
+    case 'square-root': {
+      return `Square root: ${roundNumber(Math.sqrt(Number(values.value)))}`;
+    }
+    case 'power': {
+      return `Power: ${roundNumber(Math.pow(Number(values.base), Number(values.exponent)))}`;
+    }
+    case 'log': {
+      return `Log: ${roundNumber(Math.log(Number(values.value)))}`;
+    }
+    case 'pi': {
+      return `Pi result: ${roundNumber(Number(values.value) * Math.PI)}`;
+    }
+    case 'currency': {
+      const amount = Number(values.amount);
+      return `INR estimate: ${roundNumber(amount * 83.7)}`;
+    }
+    case 'generic': {
+      const v1 = Number(values.value1);
+      const v2 = Number(values.value2);
+      return `Result: ${roundNumber(v1 + v2)}`;
+    }
+    default:
+      return 'Calculator logic not configured yet.';
   }
 }
 
@@ -468,6 +761,14 @@ async function handleSubmit(event) {
 
   try {
     setStatus('Preparing files...');
+
+    if (tool === 'calculator') {
+      const values = getFormValues(form);
+      const result = calculateResult(form.dataset.calc, values);
+      setStatus('Calculation completed.');
+      setResult(result);
+      return;
+    }
 
     try {
       const healthResponse = await fetch('/api/health');

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Rotate | Talksyra PDF Studio</title>
+    <meta name="description" content="Rotate JPG, PNG, and other image files with a clean, professional workflow." />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <a href="../index.html" class="brand">Talksyra <span>PDF Studio</span></a>
+        <nav>
+          <a href="../index.html">Home</a>
+          <a href="../index.html#tools">All Tools</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container tool-page">
+      <a class="back-link" href="../index.html">← Back to All Tools</a>
+      <h1>Image Rotate</h1>
+      <p>Rotate JPG, PNG, and other image files with a clean, professional workflow.</p>
+
+      <section class="tool-panel">
+        <form data-tool="image-rotate" data-target="image-rotate">
+          <label class="upload-box">
+            <span class="upload-title">Drop your file here</span>
+            <span class="upload-subtitle">Click to choose your image/* file</span>
+            <input type="file" accept="image/*" />
+          </label>
+          <div class="selected-file-name">No file selected</div>
+          
+          <label>
+            Rotation angle
+            <select>
+              <option value="90">90° clockwise</option><option value="180">180°</option><option value="270">270° clockwise</option>
+            </select>
+          </label>
+          <button type="submit">Rotate Image</button>
+        </form>
+        <div class="status"></div>
+        <div class="tool-actions">
+          <button type="button" class="download-result-btn" hidden>Download Result</button>
+          <button type="button" class="reset-result-btn">Reset</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="../script.js"></script>
+  </body>
+</html>
