@@ -8,6 +8,30 @@ function setStatus(message) {
   }
 }
 
+function getSelectedFileNames(fileInput) {
+  const files = Array.from(fileInput.files || []);
+  if (!files.length) {
+    return 'No file selected';
+  }
+
+  return files.map((file) => file.name).join(', ');
+}
+
+function syncSelectedFileState(fileInput, selectedNameEl) {
+  if (!fileInput || !selectedNameEl) {
+    return;
+  }
+
+  const files = Array.from(fileInput.files || []);
+  const names = getSelectedFileNames(fileInput);
+  selectedNameEl.textContent = names;
+  selectedNameEl.classList.toggle('is-active', files.length > 0);
+
+  if (form) {
+    form.classList.toggle('has-file', files.length > 0);
+  }
+}
+
 function ensureDownloadButton() {
   let button = document.querySelector('.download-result-btn');
   if (!button) {
@@ -16,20 +40,42 @@ function ensureDownloadButton() {
     button.className = 'download-result-btn';
     button.hidden = true;
     button.textContent = 'Download Result';
+    button.addEventListener('click', () => openDownloadModal());
+
+    if (statusBox && statusBox.parentElement) {
+      statusBox.parentElement.appendChild(button);
+    }
+  }
+
+  return button;
+}
+
+function ensureResetButton() {
+  let button = document.querySelector('.reset-result-btn');
+  if (!button) {
+    button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'reset-result-btn';
+    button.textContent = 'Reset';
     button.addEventListener('click', () => {
-      if (!pendingDownload) {
+      if (!form) {
         return;
       }
 
-      const { blob, filename } = pendingDownload;
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 4000);
+      form.reset();
+      const fileInput = form.querySelector('input[type="file"]');
+      const selectedNameEl = form.querySelector('.selected-file-name');
+      syncSelectedFileState(fileInput, selectedNameEl);
+      pendingDownload = null;
+      const downloadButton = document.querySelector('.download-result-btn');
+      if (downloadButton) {
+        downloadButton.hidden = true;
+        downloadButton.textContent = 'Download Result';
+      }
+      const modal = document.querySelector('.download-modal');
+      if (modal) {
+        modal.remove();
+      }
     });
 
     if (statusBox && statusBox.parentElement) {
@@ -40,8 +86,80 @@ function ensureDownloadButton() {
   return button;
 }
 
-function prepareDownload(blob, filename) {
-  pendingDownload = { blob, filename };
+function getDownloadFormats(toolName) {
+  const formatMap = {
+    merge: ['PDF', 'ZIP'],
+    split: ['PDF', 'ZIP'],
+    compress: ['PDF', 'ZIP'],
+    'pdf-to-word': ['DOCX', 'PDF', 'TXT'],
+    'word-to-pdf': ['PDF', 'DOCX'],
+    'pdf-to-image': ['PNG', 'JPG', 'ZIP'],
+    'image-to-pdf': ['PDF', 'ZIP'],
+    rotate: ['PDF', 'ZIP'],
+    unlock: ['PDF', 'ZIP'],
+    watermark: ['PDF', 'ZIP'],
+  };
+
+  return formatMap[toolName] || ['PDF'];
+}
+
+function openDownloadModal() {
+  if (!pendingDownload || !form) {
+    return;
+  }
+
+  const modal = document.querySelector('.download-modal');
+  if (modal) {
+    modal.remove();
+  }
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'download-modal';
+  wrapper.innerHTML = `
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Choose download format</h3>
+        <button type="button" class="modal-close">×</button>
+      </div>
+      <div class="format-grid">
+        ${getDownloadFormats(form.dataset.tool)
+          .map((format) => `
+            <label class="format-option">
+              <input type="radio" name="download-format" value="${format}" ${format === 'PDF' ? 'checked' : ''} />
+              <span>${format}</span>
+            </label>
+          `)
+          .join('')}
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="modal-confirm">Confirm Download</button>
+      </div>
+    </div>
+  `;
+
+  const closeButton = wrapper.querySelector('.modal-close');
+  closeButton.addEventListener('click', () => wrapper.remove());
+
+  const confirmButton = wrapper.querySelector('.modal-confirm');
+  confirmButton.addEventListener('click', () => {
+    const selected = wrapper.querySelector('input[name="download-format"]:checked')?.value || 'PDF';
+    const fileExt = selected.toLowerCase();
+    const url = URL.createObjectURL(new Blob([pendingDownload.blob], { type: pendingDownload.blob.type || 'application/octet-stream' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = pendingDownload.filename.replace(/\.[^/.]+$/, '') + `.${fileExt}`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+    wrapper.remove();
+  });
+
+  document.body.appendChild(wrapper);
+}
+
+function prepareDownload(blob, filename, formats = ['PDF']) {
+  pendingDownload = { blob, filename, formats };
   const button = ensureDownloadButton();
   button.hidden = false;
   button.textContent = `Download ${filename}`;
