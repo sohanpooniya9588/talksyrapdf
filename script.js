@@ -74,14 +74,14 @@ function waitForLibraries() {
   );
 }
 
-async function loadPdfJsDocument(data) {
+async function loadPdfJsDocument(data, password = '') {
   if (!window['pdfjsLib']) {
     throw new Error('PDF.js is not available.');
   }
 
   const pdfjsLib = window['pdfjsLib'];
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-  return pdfjsLib.getDocument({ data }).promise;
+  return pdfjsLib.getDocument({ data, password }).promise;
 }
 
 async function renderPageToImage(page, scale = 1.35) {
@@ -337,10 +337,37 @@ async function handleSubmit(event) {
 
   try {
     setStatus('Preparing files...');
+
+    try {
+      const healthResponse = await fetch('/api/health');
+      if (healthResponse.ok) {
+        const healthData = await healthResponse.json();
+        if (healthData?.ok) {
+          setStatus(`Worker endpoint connected for ${tool}.`);
+        }
+      }
+    } catch {
+      setStatus('Local preview mode: using browser-side processing flow.');
+    }
+
     await waitForLibraries();
 
     if (!fileInput || !fileInput.files?.length) {
       throw new Error('Please upload a file first.');
+    }
+
+    try {
+      await fetch('/api/process', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tool,
+          fileCount: fileInput.files.length,
+          fileName: fileInput.files[0]?.name || 'upload',
+        }),
+      });
+    } catch {
+      // Ignore worker endpoint failures in local preview and continue with browser-side processing.
     }
 
     if (tool === 'merge') {
