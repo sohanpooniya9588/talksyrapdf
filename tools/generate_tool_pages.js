@@ -11,6 +11,9 @@ function buildPage({ slug, title, description, tool, inputAccept, actionLabel, s
   const normalizedSlug = slug.replace(/[^a-z0-9-]/g, '-');
   const filePath = path.join(__dirname, `${normalizedSlug}.html`);
   const formDataTool = tool;
+  const seoTitle = `${title} Online Free | Talksyra PDF Studio`;
+  const seoDescription = `${description.replace(/\.$/, '')}. Free online tool for fast results, mobile-friendly workflow, and clean document conversion.`;
+  const seoKeywords = `${title.toLowerCase()}, ${slug.replace(/-/g, ' ')}, online free tool, converter, talksyra pdf studio`;
   const selectMarkup = selectOptions && selectOptions.length
     ? `
           <label>
@@ -23,11 +26,22 @@ function buildPage({ slug, title, description, tool, inputAccept, actionLabel, s
 
   const html = `<!doctype html>
 <html lang="en">
-  <head>
+  <head>  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GZHJNRTESB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GZHJNRTESB');
+</script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>${title} | Talksyra PDF Studio</title>
-    <meta name="description" content="${description}" />
+    <title>${seoTitle}</title>
+    <meta name="description" content="${seoDescription}" />
+    <meta name="keywords" content="${seoKeywords}" />
+    <meta property="og:title" content="${seoTitle}" />
+    <meta property="og:description" content="${seoDescription}" />
     <link rel="stylesheet" href="../styles.css" />
   </head>
   <body>

@@ -192,13 +192,27 @@ function buildInput(field) {
 
 function buildPage(config) {
   const fieldsMarkup = config.fields.map(buildInput).join('\n');
+  const seoTitle = `${config.title} Online Free | Talksyra PDF Studio`;
+  const seoDescription = `${config.description.replace(/\.$/, '')}. Fast, free, and mobile-friendly calculator page for quick results.`;
+  const seoKeywords = `${config.title.toLowerCase()}, ${config.slug.replace(/-/g, ' ')}, online free calculator, utility tool, talksyra pdf studio`;
   const page = `<!doctype html>
 <html lang="en">
-  <head>
+  <head>  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GZHJNRTESB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GZHJNRTESB');
+</script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>${config.title} | Talksyra PDF Studio</title>
-    <meta name="description" content="${config.description}" />
+    <title>${seoTitle}</title>
+    <meta name="description" content="${seoDescription}" />
+    <meta name="keywords" content="${seoKeywords}" />
+    <meta property="og:title" content="${seoTitle}" />
+    <meta property="og:description" content="${seoDescription}" />
     <link rel="stylesheet" href="../styles.css" />
   </head>
   <body>

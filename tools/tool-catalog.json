@@ -1,0 +1,59 @@
+{
+  "categories": [
+    {
+      "eyebrow": "PDF tools",
+      "title": "Document workflow tools",
+      "id": "pdf-tools-list",
+      "tools": [
+        { "title": "Merge PDF", "href": "tools/merge.html", "description": "Merge PDF online free and combine multiple files into one clean document." },
+        { "title": "Split PDF", "href": "tools/split.html", "description": "Split PDF online free into pages, ranges, or separate sections." },
+        { "title": "Compress PDF", "href": "tools/compress.html", "description": "Compress PDF online free and reduce file size while keeping quality." },
+        { "title": "PDF to Word", "href": "tools/convert-word.html", "description": "Convert PDF to Word online free for editing and sharing." },
+        { "title": "Word to PDF", "href": "tools/word-to-pdf.html", "description": "Convert Word to PDF online free in one clean step." },
+        { "title": "Rotate PDF", href: "tools/rotate.html", "description": "Rotate PDF pages quickly for a neat, print-ready layout." },
+        { "title": "Unlock PDF", "href": "tools/unlock.html", "description": "Unlock PDF documents and remove restrictions from protected files." },
+        { "title": "Watermark PDF", "href": "tools/watermark.html", "description": "Add watermark PDF text or branded marks to your document." },
+        { "title": "PDF to Text", "href": "tools/pdf-to-text.html", "description": "Extract text from PDF files for reading, editing, and reuse." },
+        { "title": "PDF Page Counter", "href": "tools/pdf-page-counter.html", "description": "Check document page count in seconds with a quick utility flow." },
+        { "title": "PDF Size Checker", "href": "tools/pdf-size-checker.html", "description": "Check PDF file size and ensure your upload is efficient." }
+      ]
+    },
+    {
+      "eyebrow": "Image & converter tools",
+      "title": "Image and file conversion utilities",
+      "id": "image-tools-list",
+      "tools": [
+        { "title": "PDF to Image", "href": "tools/pdf-to-image.html", "description": "PDF to JPG or PDF to PNG converter for fast export and sharing." },
+        { "title": "Image to PDF", "href": "tools/image-to-pdf.html", "description": "JPG to PDF or PNG to PDF converter with a simple workflow." },
+        { "title": "JPG to PNG", "href": "tools/jpg-to-png.html", "description": "Convert JPG to PNG with professional image output." },
+        { "title": "PNG to JPG", "href": "tools/png-to-jpg.html", "description": "Convert PNG to JPG for lightweight sharing or web use." },
+        { "title": "JPG to WebP", "href": "tools/jpg-to-webp.html", "description": "Convert JPG to WebP for faster modern image delivery." },
+        { "title": "PNG to WebP", "href": "tools/png-to-webp.html", "description": "Convert PNG to WebP for optimized, fast-loading image content." },
+        { "title": "Image Compressor", "href": "tools/image-compressor.html", "description": "Compress image files and optimize them for better website loading." },
+        { "title": "Image Resizer", "href": "tools/image-resizer.html", "description": "Adjust images to a specific resolution quickly and cleanly." },
+        { "title": "Image Crop", "href": "tools/image-crop.html", "description": "Crop a selected part of an image for focused output." },
+        { "title": "Image Watermark", "href": "tools/image-watermark.html", "description": "Add a text or brand mark to your images with one action." },
+        { "title": "File Name Cleaner", "href": "tools/file-name-cleaner.html", "description": "Clean and organize image or document file names in one step." }
+      ]
+    },
+    {
+      "eyebrow": "Calculators",
+      "title": "Quick smart calculators",
+      "id": "calculator-tools-list",
+      "tools": [
+        { "title": "Age Calculator", "href": "tools/age-calculator.html", "description": "Calculate age quickly from your date of birth." },
+        { "title": "BMI Calculator", "href": "tools/bmi-calculator.html", "description": "Check BMI with a clear, fast calculation flow." },
+        { "title": "Percentage Calculator", "href": "tools/percentage-calculator.html", "description": "Find percentages in a professional, one-screen format." },
+        { "title": "Discount Calculator", "href": "tools/discount-calculator.html", "description": "Calculate discount and final price instantly." },
+        { "title": "Tip Calculator", "href": "tools/tip-calculator.html", "description": "Split a bill and calculate tip amount in seconds." },
+        { "title": "Loan EMI Calculator", "href": "tools/loan-emi-calculator.html", "description": "Estimate your monthly EMI from the loan inputs." },
+        { "title": "Currency Converter", "href": "tools/currency-converter.html", "description": "Convert INR and other values with a quick calculator flow." },
+        { "title": "Length Converter", "href": "tools/length-converter.html", "description": "Convert meters to feet and inches in a single screen." },
+        { "title": "Weight Converter", "href": "tools/weight-converter.html", "description": "Convert kilograms into pounds and grams instantly." },
+        { "title": "Temperature Converter", "href": "tools/temperature-converter.html", "description": "Switch between Celsius, Fahrenheit, and Kelvin quickly." },
+        { "title": "Simple Interest", "href": "tools/simple-interest-calculator.html", "description": "Estimate simple interest with a polished calculator layout." },
+        { "title": "Compound Interest", "href": "tools/compound-interest-calculator.html", "description": "Project compound returns based on rate and timeline." }
+      ]
+    }
+  ]
+}
