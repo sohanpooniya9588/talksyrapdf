@@ -32,58 +32,37 @@ function syncSelectedFileState(fileInput, selectedNameEl) {
   }
 }
 
-function ensureDownloadButton() {
-  let button = document.querySelector('.download-result-btn');
-  if (!button) {
-    button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'download-result-btn';
-    button.hidden = true;
-    button.textContent = 'Download Result';
-    button.addEventListener('click', () => openDownloadModal());
-
-    if (statusBox && statusBox.parentElement) {
-      statusBox.parentElement.appendChild(button);
-    }
+function attachToolActionButtons() {
+  if (!form) {
+    return;
   }
 
-  return button;
-}
+  const downloadButton = form.parentElement?.querySelector('.download-result-btn');
+  const resetButton = form.parentElement?.querySelector('.reset-result-btn');
 
-function ensureResetButton() {
-  let button = document.querySelector('.reset-result-btn');
-  if (!button) {
-    button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'reset-result-btn';
-    button.textContent = 'Reset';
-    button.addEventListener('click', () => {
-      if (!form) {
-        return;
-      }
+  if (downloadButton) {
+    downloadButton.addEventListener('click', () => openDownloadModal());
+  }
 
+  if (resetButton) {
+    resetButton.addEventListener('click', () => {
       form.reset();
       const fileInput = form.querySelector('input[type="file"]');
       const selectedNameEl = form.querySelector('.selected-file-name');
       syncSelectedFileState(fileInput, selectedNameEl);
       pendingDownload = null;
-      const downloadButton = document.querySelector('.download-result-btn');
+
       if (downloadButton) {
         downloadButton.hidden = true;
         downloadButton.textContent = 'Download Result';
       }
+
       const modal = document.querySelector('.download-modal');
       if (modal) {
         modal.remove();
       }
     });
-
-    if (statusBox && statusBox.parentElement) {
-      statusBox.parentElement.appendChild(button);
-    }
   }
-
-  return button;
 }
 
 function getDownloadFormats(toolName) {
@@ -160,9 +139,11 @@ function openDownloadModal() {
 
 function prepareDownload(blob, filename, formats = ['PDF']) {
   pendingDownload = { blob, filename, formats };
-  const button = ensureDownloadButton();
-  button.hidden = false;
-  button.textContent = `Download ${filename}`;
+  const button = form?.parentElement?.querySelector('.download-result-btn');
+  if (button) {
+    button.hidden = false;
+    button.textContent = `Download ${filename}`;
+  }
 }
 
 function parseRanges(input) {
@@ -566,10 +547,11 @@ if (form && statusBox) {
 
   if (fileInput && selectedName) {
     fileInput.addEventListener('change', () => {
-      const files = Array.from(fileInput.files || []);
-      selectedName.textContent = files.length
-        ? files.map((file) => file.name).join(', ')
-        : 'No file selected';
+      syncSelectedFileState(fileInput, selectedName);
     });
+
+    syncSelectedFileState(fileInput, selectedName);
   }
+
+  attachToolActionButtons();
 }
