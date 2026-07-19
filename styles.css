@@ -519,10 +519,23 @@ button:hover {
   filter: brightness(1.03);
 }
 
+.selected-file-name {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
 .status {
   margin-top: 12px;
   color: var(--accent);
   font-weight: 700;
+}
+
+.download-result-btn {
+  margin-top: 12px;
+  width: auto;
+  min-width: 190px;
 }
 
 .footer {

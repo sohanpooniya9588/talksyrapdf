@@ -1,5 +1,6 @@
 const form = document.querySelector('form');
 const statusBox = document.querySelector('.status');
+let pendingDownload = null;
 
 function setStatus(message) {
   if (statusBox) {
@@ -7,13 +8,43 @@ function setStatus(message) {
   }
 }
 
-function downloadBlob(blob, filename) {
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(url), 4000);
+function ensureDownloadButton() {
+  let button = document.querySelector('.download-result-btn');
+  if (!button) {
+    button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'download-result-btn';
+    button.hidden = true;
+    button.textContent = 'Download Result';
+    button.addEventListener('click', () => {
+      if (!pendingDownload) {
+        return;
+      }
+
+      const { blob, filename } = pendingDownload;
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+    });
+
+    if (statusBox && statusBox.parentElement) {
+      statusBox.parentElement.appendChild(button);
+    }
+  }
+
+  return button;
+}
+
+function prepareDownload(blob, filename) {
+  pendingDownload = { blob, filename };
+  const button = ensureDownloadButton();
+  button.hidden = false;
+  button.textContent = `Download ${filename}`;
 }
 
 function parseRanges(input) {
@@ -111,7 +142,7 @@ async function mergePdfFiles(files) {
   }
 
   const bytes = await mergedPdf.save();
-  downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'merged.pdf');
+  prepareDownload(new Blob([bytes], { type: 'application/pdf' }), 'merged.pdf');
 }
 
 async function splitPdfFile(file, rangesInput) {
@@ -131,7 +162,7 @@ async function splitPdfFile(file, rangesInput) {
     const [copiedPage] = await newPdf.copyPages(sourcePdf, [pageIndex]);
     newPdf.addPage(copiedPage);
     const outputBytes = await newPdf.save();
-    downloadBlob(new Blob([outputBytes], { type: 'application/pdf' }), `split-page-${pageNumber}.pdf`);
+    prepareDownload(new Blob([outputBytes], { type: 'application/pdf' }), `split-page-${pageNumber}.pdf`);
   }
 }
 
@@ -158,7 +189,7 @@ async function compressPdfFile(file) {
   }
 
   const outputBytes = await compressed.save();
-  downloadBlob(new Blob([outputBytes], { type: 'application/pdf' }), 'compressed.pdf');
+  prepareDownload(new Blob([outputBytes], { type: 'application/pdf' }), 'compressed.pdf');
 }
 
 async function pdfToWord(file) {
@@ -187,7 +218,7 @@ async function pdfToWord(file) {
   });
 
   const blob = await Packer.toBlob(doc);
-  downloadBlob(blob, 'converted.docx');
+  prepareDownload(blob, 'converted.docx');
 }
 
 async function wordToPdf(file) {
@@ -217,7 +248,7 @@ async function wordToPdf(file) {
   });
 
   const pdfBytes = await pdfDoc.save();
-  downloadBlob(new Blob([pdfBytes], { type: 'application/pdf' }), 'converted.pdf');
+  prepareDownload(new Blob([pdfBytes], { type: 'application/pdf' }), 'converted.pdf');
 }
 
 async function pdfToImage(file) {
@@ -228,7 +259,7 @@ async function pdfToImage(file) {
     const page = await pdf.getPage(pageIndex);
     const canvas = await renderPageToImage(page, 1.4);
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
-    downloadBlob(blob, `page-${pageIndex}.png`);
+    prepareDownload(blob, `page-${pageIndex}.png`);
   }
 }
 
@@ -251,7 +282,7 @@ async function imageToPdf(files) {
   }
 
   const bytes = await pdfDoc.save();
-  downloadBlob(new Blob([bytes], { type: 'application/pdf' }), 'images.pdf');
+  prepareDownload(new Blob([bytes], { type: 'application/pdf' }), 'images.pdf');
 }
 
 async function rotatePdf(file, angleValue) {
@@ -268,7 +299,7 @@ async function rotatePdf(file, angleValue) {
   });
 
   const outputBytes = await pdfDoc.save();
-  downloadBlob(new Blob([outputBytes], { type: 'application/pdf' }), 'rotated.pdf');
+  prepareDownload(new Blob([outputBytes], { type: 'application/pdf' }), 'rotated.pdf');
 }
 
 async function unlockPdf(file, password) {
@@ -292,7 +323,7 @@ async function unlockPdf(file, password) {
   }
 
   const outputBytes = await pdfDoc.save();
-  downloadBlob(new Blob([outputBytes], { type: 'application/pdf' }), 'unlocked.pdf');
+  prepareDownload(new Blob([outputBytes], { type: 'application/pdf' }), 'unlocked.pdf');
 }
 
 async function watermarkPdf(file, text, opacityValue) {
@@ -319,7 +350,7 @@ async function watermarkPdf(file, text, opacityValue) {
   });
 
   const outputBytes = await pdfDoc.save();
-  downloadBlob(new Blob([outputBytes], { type: 'application/pdf' }), 'watermarked.pdf');
+  prepareDownload(new Blob([outputBytes], { type: 'application/pdf' }), 'watermarked.pdf');
 }
 
 async function handleSubmit(event) {
@@ -411,4 +442,16 @@ async function handleSubmit(event) {
 
 if (form && statusBox) {
   form.addEventListener('submit', handleSubmit);
+
+  const fileInput = form.querySelector('input[type="file"]');
+  const selectedName = form.querySelector('.selected-file-name');
+
+  if (fileInput && selectedName) {
+    fileInput.addEventListener('change', () => {
+      const files = Array.from(fileInput.files || []);
+      selectedName.textContent = files.length
+        ? files.map((file) => file.name).join(', ')
+        : 'No file selected';
+    });
+  }
 }
