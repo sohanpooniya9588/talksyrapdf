@@ -358,6 +358,19 @@ h2 {
   margin-bottom: 24px;
 }
 
+.category-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-small {
+  padding: 10px 14px;
+  font-size: 0.85rem;
+}
+
 .tool-grid,
 .features-grid,
 .testimonials-grid,
@@ -376,6 +389,10 @@ h2 {
   color: inherit;
   position: relative;
   overflow: hidden;
+}
+
+.hidden-tool {
+  display: none;
 }
 
 .tool-card::after,

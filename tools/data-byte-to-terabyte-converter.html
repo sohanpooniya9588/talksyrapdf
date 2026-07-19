@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Converter: byte to terabyte | Talksyra PDF Studio</title>
+    <meta name="description" content="Convert byte values into terabyte with a clean online utility workflow." />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <a href="../index.html" class="brand">Talksyra <span>PDF Studio</span></a>
+        <nav>
+          <a href="../index.html">Home</a>
+          <a href="../index.html#tools">All Tools</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container tool-page">
+      <a class="back-link" href="../index.html">← Back to All Tools</a>
+      <h1>Data Converter: byte to terabyte</h1>
+      <p>Convert byte values into terabyte with a clean online utility workflow.</p>
+
+      <section class="tool-panel">
+        <form data-tool="calculator" data-calc="data-unit-convert">
+          <label><span>Amount</span><input type="number" name="amount" step="any" /></label>
+<label><span>From unit</span><select name="fromUnit"><option value="bit">bit</option><option value="byte">byte</option><option value="kb">kilobyte</option><option value="mb">megabyte</option><option value="gb">gigabyte</option><option value="tb">terabyte</option><option value="kib">kibibyte</option><option value="mib">mebibyte</option></select></label>
+<label><span>To unit</span><select name="toUnit"><option value="bit">bit</option><option value="byte">byte</option><option value="kb">kilobyte</option><option value="mb">megabyte</option><option value="gb">gigabyte</option><option value="tb">terabyte</option><option value="kib">kibibyte</option><option value="mib">mebibyte</option></select></label>
+          <button type="submit">Calculate</button>
+        </form>
+        <div class="status"></div>
+        <div class="result-box" hidden></div>
+      </section>
+    </main>
+
+    <script src="../script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Income Tax Estimator | Talksyra PDF Studio</title>
+    <meta name="description" content="Establish an estimate for total income tax quickly." />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <a href="../index.html" class="brand">Talksyra <span>PDF Studio</span></a>
+        <nav>
+          <a href="../index.html">Home</a>
+          <a href="../index.html#tools">All Tools</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container tool-page">
+      <a class="back-link" href="../index.html">← Back to All Tools</a>
+      <h1>Income Tax Estimator</h1>
+      <p>Establish an estimate for total income tax quickly.</p>
+
+      <section class="tool-panel">
+        <form data-tool="calculator" data-calc="finance-tax">
+          <label><span>Income</span><input type="number" name="income" step="any" /></label>
+<label><span>Tax rate %</span><input type="number" name="rate" step="any" /></label>
+          <button type="submit">Calculate</button>
+        </form>
+        <div class="status"></div>
+        <div class="result-box" hidden></div>
+      </section>
+    </main>
+
+    <script src="../script.js"></script>
+  </body>
+</html>

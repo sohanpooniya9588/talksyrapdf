@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weight Converter: pound to ounce | Talksyra PDF Studio</title>
+    <meta name="description" content="Convert pound values into ounce with a clean online utility workflow." />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <a href="../index.html" class="brand">Talksyra <span>PDF Studio</span></a>
+        <nav>
+          <a href="../index.html">Home</a>
+          <a href="../index.html#tools">All Tools</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container tool-page">
+      <a class="back-link" href="../index.html">← Back to All Tools</a>
+      <h1>Weight Converter: pound to ounce</h1>
+      <p>Convert pound values into ounce with a clean online utility workflow.</p>
+
+      <section class="tool-panel">
+        <form data-tool="calculator" data-calc="weight-convert">
+          <label><span>Amount</span><input type="number" name="amount" step="any" /></label>
+<label><span>From unit</span><select name="fromUnit"><option value="kg">kilogram</option><option value="g">gram</option><option value="mg">milligram</option><option value="lb">pound</option><option value="oz">ounce</option><option value="st">stone</option><option value="tonne">tonne</option><option value="q">quintal</option></select></label>
+<label><span>To unit</span><select name="toUnit"><option value="kg">kilogram</option><option value="g">gram</option><option value="mg">milligram</option><option value="lb">pound</option><option value="oz">ounce</option><option value="st">stone</option><option value="tonne">tonne</option><option value="q">quintal</option></select></label>
+          <button type="submit">Calculate</button>
+        </form>
+        <div class="status"></div>
+        <div class="result-box" hidden></div>
+      </section>
+    </main>
+
+    <script src="../script.js"></script>
+  </body>
+</html>

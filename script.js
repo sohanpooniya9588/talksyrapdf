@@ -3,6 +3,105 @@ const statusBox = document.querySelector('.status');
 const resultBox = document.querySelector('.result-box');
 let pendingDownload = null;
 
+const homeToolCatalog = [
+  {
+    eyebrow: 'PDF tools',
+    title: 'Document workflow tools',
+    id: 'pdf-tools-list',
+    tools: [
+      { title: 'Merge PDF', href: 'tools/merge.html', description: 'Merge PDF online free and combine multiple files into one clean document.' },
+      { title: 'Split PDF', href: 'tools/split.html', description: 'Split PDF online free into pages, ranges, or separate sections.' },
+      { title: 'Compress PDF', href: 'tools/compress.html', description: 'Compress PDF online free and reduce file size while keeping quality.' },
+      { title: 'PDF to Word', href: 'tools/convert-word.html', description: 'Convert PDF to Word online free for editing and sharing.' },
+      { title: 'Word to PDF', href: 'tools/word-to-pdf.html', description: 'Convert Word to PDF online free in one clean step.' },
+      { title: 'Rotate PDF', href: 'tools/rotate.html', description: 'Rotate PDF pages quickly for a neat, print-ready layout.' },
+      { title: 'Unlock PDF', href: 'tools/unlock.html', description: 'Unlock PDF documents and remove restrictions from protected files.' },
+      { title: 'Watermark PDF', href: 'tools/watermark.html', description: 'Add watermark PDF text or branded marks to your document.' },
+      { title: 'PDF to Text', href: 'tools/pdf-to-text.html', description: 'Extract text from PDF files for reading, editing, and reuse.' },
+      { title: 'PDF Page Counter', href: 'tools/pdf-page-counter.html', description: 'Check document page count in seconds with a quick utility flow.' },
+      { title: 'PDF Size Checker', href: 'tools/pdf-size-checker.html', description: 'Check PDF file size and ensure your upload is efficient.' },
+    ],
+  },
+  {
+    eyebrow: 'Image & converter tools',
+    title: 'Image and file conversion utilities',
+    id: 'image-tools-list',
+    tools: [
+      { title: 'PDF to Image', href: 'tools/pdf-to-image.html', description: 'PDF to JPG or PDF to PNG converter for fast export and sharing.' },
+      { title: 'Image to PDF', href: 'tools/image-to-pdf.html', description: 'JPG to PDF or PNG to PDF converter with a simple workflow.' },
+      { title: 'JPG to PNG', href: 'tools/jpg-to-png.html', description: 'Convert JPG to PNG with professional image output.' },
+      { title: 'PNG to JPG', href: 'tools/png-to-jpg.html', description: 'Convert PNG to JPG for lightweight sharing or web use.' },
+      { title: 'JPG to WebP', href: 'tools/jpg-to-webp.html', description: 'Convert JPG to WebP for faster modern image delivery.' },
+      { title: 'PNG to WebP', href: 'tools/png-to-webp.html', description: 'Convert PNG to WebP for optimized, fast-loading image content.' },
+      { title: 'Image Compressor', href: 'tools/image-compressor.html', description: 'Compress image files and optimize them for better website loading.' },
+      { title: 'Image Resizer', href: 'tools/image-resizer.html', description: 'Adjust images to a specific resolution quickly and cleanly.' },
+      { title: 'Image Crop', href: 'tools/image-crop.html', description: 'Crop a selected part of an image for focused output.' },
+      { title: 'Image Watermark', href: 'tools/image-watermark.html', description: 'Add a text or brand mark to your images with one action.' },
+      { title: 'File Name Cleaner', href: 'tools/file-name-cleaner.html', description: 'Clean and organize image or document file names in one step.' },
+    ],
+  },
+  {
+    eyebrow: 'Calculators',
+    title: 'Quick smart calculators',
+    id: 'calculator-tools-list',
+    tools: [
+      { title: 'Age Calculator', href: 'tools/age-calculator.html', description: 'Calculate age quickly from your date of birth.' },
+      { title: 'BMI Calculator', href: 'tools/bmi-calculator.html', description: 'Check BMI with a clear, fast calculation flow.' },
+      { title: 'Percentage Calculator', href: 'tools/percentage-calculator.html', description: 'Find percentages in a professional, one-screen format.' },
+      { title: 'Discount Calculator', href: 'tools/discount-calculator.html', description: 'Calculate discount and final price instantly.' },
+      { title: 'Tip Calculator', href: 'tools/tip-calculator.html', description: 'Split a bill and calculate tip amount in seconds.' },
+      { title: 'Loan EMI Calculator', href: 'tools/loan-emi-calculator.html', description: 'Estimate your monthly EMI from the loan inputs.' },
+      { title: 'Currency Converter', href: 'tools/currency-converter.html', description: 'Convert INR and other values with a quick calculator flow.' },
+      { title: 'Length Converter', href: 'tools/length-converter.html', description: 'Convert meters to feet and inches in a single screen.' },
+      { title: 'Weight Converter', href: 'tools/weight-converter.html', description: 'Convert kilograms into pounds and grams instantly.' },
+      { title: 'Temperature Converter', href: 'tools/temperature-converter.html', description: 'Switch between Celsius, Fahrenheit, and Kelvin quickly.' },
+      { title: 'Simple Interest', href: 'tools/simple-interest-calculator.html', description: 'Estimate simple interest with a polished calculator layout.' },
+      { title: 'Compound Interest', href: 'tools/compound-interest-calculator.html', description: 'Project compound returns based on rate and timeline.' },
+    ],
+  },
+];
+
+function buildHomeCategoryMarkup(category) {
+  const previewTools = category.tools.slice(0, 10);
+  const hiddenTools = category.tools.slice(10);
+  const hiddenMarkup = hiddenTools.map((tool) => `
+    <a class="tool-card hidden-tool" href="${tool.href}">
+      <h3>${tool.title}</h3>
+      <p>${tool.description}</p>
+    </a>
+  `).join('');
+
+  return `
+    <div class="section-head" style="margin-top: 32px;">
+      <div class="category-head">
+        <div>
+          <p class="eyebrow">${category.eyebrow}</p>
+          <h2>${category.title}</h2>
+        </div>
+        <button type="button" class="btn btn-secondary btn-small view-all-tools" data-target="${category.id}">${hiddenTools.length ? 'View all tools' : 'Explore tools'}</button>
+      </div>
+    </div>
+    <div class="tool-grid category-tools" id="${category.id}" data-preview-size="10">
+      ${previewTools.map((tool) => `
+        <a class="tool-card" href="${tool.href}">
+          <h3>${tool.title}</h3>
+          <p>${tool.description}</p>
+        </a>
+      `).join('')}
+      ${hiddenMarkup}
+    </div>
+  `;
+}
+
+function renderHomeToolCategories() {
+  const container = document.querySelector('#home-tool-categories');
+  if (!container) {
+    return;
+  }
+
+  container.innerHTML = homeToolCatalog.map(buildHomeCategoryMarkup).join('');
+}
+
 function setStatus(message) {
   if (statusBox) {
     statusBox.textContent = message;
@@ -31,12 +130,222 @@ function getFormValues(formElement) {
   return values;
 }
 
+function initCategoryToolPreview() {
+  const categoryGrids = document.querySelectorAll('.category-tools[data-preview-size]');
+
+  categoryGrids.forEach((grid) => {
+    const previewSize = Number(grid.dataset.previewSize || 10);
+    const cards = Array.from(grid.querySelectorAll('.tool-card'));
+    const hiddenCards = cards.slice(previewSize);
+    const button = document.querySelector(`[data-target="${grid.id}"]`);
+
+    hiddenCards.forEach((card) => {
+      card.classList.add('hidden-tool');
+    });
+
+    if (!button || !hiddenCards.length) {
+      return;
+    }
+
+    button.addEventListener('click', () => {
+      const isExpanded = button.dataset.expanded === 'true';
+      hiddenCards.forEach((card) => {
+        card.classList.toggle('hidden-tool', isExpanded);
+      });
+      button.dataset.expanded = String(!isExpanded);
+      button.textContent = isExpanded ? 'View all tools' : 'Show less';
+    });
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    renderHomeToolCategories();
+    initCategoryToolPreview();
+  });
+} else {
+  renderHomeToolCategories();
+  initCategoryToolPreview();
+}
+
 function roundNumber(value) {
   if (!Number.isFinite(value)) {
     return value;
   }
 
   return Number(value.toFixed(2));
+}
+
+const unitConversionMaps = {
+  length: {
+    meter: 1,
+    kilometer: 1000,
+    centimeter: 0.01,
+    millimeter: 0.001,
+    mile: 1609.344,
+    foot: 0.3048,
+    inch: 0.0254,
+    yard: 0.9144,
+    micron: 0.000001,
+    nanometer: 0.000000001,
+  },
+  weight: {
+    kilogram: 1,
+    gram: 0.001,
+    milligram: 0.000001,
+    pound: 0.45359237,
+    ounce: 0.028349523125,
+    stone: 6.35029318,
+    tonne: 1000,
+    quintal: 100,
+    carat: 0.0002,
+    shortton: 907.18474,
+  },
+  area: {
+    squaremeter: 1,
+    squarekilometer: 1000000,
+    squarecentimeter: 0.0001,
+    squarefoot: 0.09290304,
+    squareyard: 0.83612736,
+    acre: 4046.8564224,
+    hectare: 10000,
+    squaremile: 2589988.110336,
+    squareinch: 0.00064516,
+    squaremillimeter: 0.000001,
+  },
+  volume: {
+    liter: 1,
+    milliliter: 0.001,
+    cubicmeter: 1000,
+    gallon: 3.785411784,
+    quart: 0.946352946,
+    pint: 0.473176473,
+    cup: 0.2365882365,
+    cubicfoot: 28.316846592,
+    tablespoon: 0.0147867648,
+    teaspoon: 0.00492892159,
+  },
+  speed: {
+    meterpersecond: 1,
+    kilometerperhour: 0.2777777778,
+    mileperhour: 0.44704,
+    knot: 0.5144444444,
+    footpersecond: 0.3048,
+    centimeterpersecond: 0.01,
+    mach: 340.29,
+    light: 299792458,
+  },
+  data: {
+    bit: 1,
+    byte: 8,
+    kilobyte: 8000,
+    megabyte: 8000000,
+    gigabyte: 8000000000,
+    terabyte: 8000000000000,
+    kibibyte: 8192,
+    mebibyte: 8388608,
+    gibibyte: 8589934592,
+    tebibyte: 8796093022208,
+  },
+  energy: {
+    joule: 1,
+    calorie: 4.184,
+    kilocalorie: 4184,
+    watthour: 3600,
+    kilowatthour: 3600000,
+    btu: 1055.05585262,
+    electronvolt: 1.602176634e-19,
+    footpound: 1.3558179483314,
+  },
+  pressure: {
+    pascal: 1,
+    kilopascal: 1000,
+    bar: 100000,
+    atmosphere: 101325,
+    psi: 6894.757293168,
+    mmhg: 133.322368421,
+    torr: 133.322368421,
+    kilopoundpersquareinch: 6894757.293168,
+  },
+  angle: {
+    degree: 1,
+    radian: 57.2957795131,
+    gradian: 0.9,
+    minute: 1 / 60,
+    second: 1 / 3600,
+    revolution: 360,
+    turn: 360,
+  },
+  frequency: {
+    hertz: 1,
+    kilohertz: 1000,
+    megahertz: 1000000,
+    gigahertz: 1000000000,
+    rpm: 1 / 60,
+    cyclepersecond: 1,
+    radianpersecond: 1 / (2 * Math.PI),
+  },
+  power: {
+    watt: 1,
+    kilowatt: 1000,
+    megawatt: 1000000,
+    horsepower: 745.699871582,
+    btuperhour: 0.29307107017,
+    kilocalorieperminute: 69.7333,
+    joulepersecond: 1,
+  },
+};
+
+function normalizeUnitKey(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-');
+}
+
+function convertLinearUnits(amount, fromUnit, toUnit, map) {
+  const fromFactor = map[normalizeUnitKey(fromUnit)];
+  const toFactor = map[normalizeUnitKey(toUnit)];
+
+  if (!fromFactor || !toFactor) {
+    return null;
+  }
+
+  return (Number(amount) * fromFactor) / toFactor;
+}
+
+function convertTemperatureUnits(value, fromUnit, toUnit) {
+  const normalizedFrom = normalizeUnitKey(fromUnit);
+  const normalizedTo = normalizeUnitKey(toUnit);
+  let celsius = Number(value);
+
+  if (normalizedFrom === 'fahrenheit') {
+    celsius = (celsius - 32) * (5 / 9);
+  } else if (normalizedFrom === 'kelvin') {
+    celsius = celsius - 273.15;
+  }
+
+  if (normalizedTo === 'fahrenheit') {
+    return (celsius * 9) / 5 + 32;
+  }
+
+  if (normalizedTo === 'kelvin') {
+    return celsius + 273.15;
+  }
+
+  return celsius;
+}
+
+function getCalculatorValue(values, fallbackKey) {
+  if (values.amount !== undefined && values.amount !== '') {
+    return Number(values.amount);
+  }
+
+  if (values[fallbackKey] !== undefined && values[fallbackKey] !== '') {
+    return Number(values[fallbackKey]);
+  }
+
+  return 0;
 }
 
 function safeCalcAge(birthDate) {
@@ -166,6 +475,66 @@ function calculateResult(calcType, values) {
       const rate = Number(values.rate);
       return `Interest: ${roundNumber((amount * rate) / 100)}`;
     }
+    case 'finance-budget': {
+      const income = Number(values.income);
+      const expense = Number(values.expense);
+      return `Remaining budget: ${roundNumber(income - expense)}`;
+    }
+    case 'finance-savings-rate': {
+      const income = Number(values.income);
+      const savings = Number(values.savings);
+      return `Savings rate: ${roundNumber((savings / income) * 100)}%`;
+    }
+    case 'finance-roi': {
+      const invested = Number(values.invested);
+      const returnValue = Number(values.returnValue);
+      return `ROI: ${roundNumber(((returnValue - invested) / invested) * 100)}%`;
+    }
+    case 'finance-cagr': {
+      const startValue = Number(values.startValue);
+      const endValue = Number(values.endValue);
+      const years = Number(values.years);
+      const cagr = Math.pow(endValue / startValue, 1 / years) - 1;
+      return `CAGR: ${roundNumber(cagr * 100)}%`;
+    }
+    case 'finance-mortgage': {
+      const principal = Number(values.principal);
+      const rate = Number(values.rate) / 1200;
+      const years = Number(values.years);
+      const months = years * 12;
+      const payment = rate === 0 ? principal / months : (principal * rate * Math.pow(1 + rate, months)) / (Math.pow(1 + rate, months) - 1);
+      return `Monthly payment: ${roundNumber(payment)}`;
+    }
+    case 'finance-tax': {
+      const income = Number(values.income);
+      const rate = Number(values.rate);
+      return `Tax estimate: ${roundNumber((income * rate) / 100)}`;
+    }
+    case 'finance-emergency': {
+      const monthlyExpenses = Number(values.monthlyExpenses);
+      const months = Number(values.months);
+      return `Emergency fund: ${roundNumber(monthlyExpenses * months)}`;
+    }
+    case 'finance-credit-interest': {
+      const balance = Number(values.balance);
+      const apr = Number(values.apr) / 100;
+      const months = Number(values.months);
+      return `Estimated interest: ${roundNumber((balance * apr * months) / 12)}`;
+    }
+    case 'finance-retirement': {
+      const goal = Number(values.goal);
+      const years = Number(values.years);
+      const returnRate = Number(values.returnRate) / 100;
+      const monthlyPayment = years > 0 ? goal / (years * 12) / (1 + returnRate) : 0;
+      return `Suggested monthly contribution: ${roundNumber(monthlyPayment)}`;
+    }
+    case 'finance-npv': {
+      const rate = Number(values.rate) / 100;
+      const cashFlow = Number(values.cashFlow);
+      const periods = Number(values.periods);
+      const npv = cashFlow / Math.pow(1 + rate, periods);
+      return `NPV estimate: ${roundNumber(npv)}`;
+    }
     case 'ratio': {
       const a = Number(values.valueA);
       const b = Number(values.valueB);
@@ -205,10 +574,83 @@ function calculateResult(calcType, values) {
       return `Pounds: ${roundNumber(kg * 2.20462)} | Grams: ${roundNumber(kg * 1000)}`;
     }
     case 'length-convert': {
+      if (values.amount !== undefined && values.amount !== '' && values.fromUnit && values.toUnit) {
+        const converted = convertLinearUnits(values.amount, values.fromUnit, values.toUnit, unitConversionMaps.length);
+        if (converted !== null) {
+          return `Converted value: ${roundNumber(converted)} ${String(values.toUnit).toLowerCase()}`;
+        }
+      }
+
       const meters = Number(values.meters);
       return `Feet: ${roundNumber(meters * 3.28084)} | Inches: ${roundNumber(meters * 39.3701)}`;
     }
+    case 'weight-convert': {
+      if (values.amount !== undefined && values.amount !== '' && values.fromUnit && values.toUnit) {
+        const converted = convertLinearUnits(values.amount, values.fromUnit, values.toUnit, unitConversionMaps.weight);
+        if (converted !== null) {
+          return `Converted value: ${roundNumber(converted)} ${String(values.toUnit).toLowerCase()}`;
+        }
+      }
+
+      const kg = Number(values.kg);
+      return `Pounds: ${roundNumber(kg * 2.20462)} | Grams: ${roundNumber(kg * 1000)}`;
+    }
+    case 'area-convert': {
+      const amount = getCalculatorValue(values, 'value');
+      const converted = convertLinearUnits(amount, values.fromUnit, values.toUnit, unitConversionMaps.area);
+      return converted !== null ? `Converted value: ${roundNumber(converted)} ${String(values.toUnit).toLowerCase()}` : 'Area conversion requires valid units.';
+    }
+    case 'volume-convert': {
+      const amount = getCalculatorValue(values, 'value');
+      const converted = convertLinearUnits(amount, values.fromUnit, values.toUnit, unitConversionMaps.volume);
+      return converted !== null ? `Converted value: ${roundNumber(converted)} ${String(values.toUnit).toLowerCase()}` : 'Volume conversion requires valid units.';
+    }
+    case 'speed-unit-convert': {
+      const amount = getCalculatorValue(values, 'value');
+      const converted = convertLinearUnits(amount, values.fromUnit, values.toUnit, unitConversionMaps.speed);
+      return converted !== null ? `Converted value: ${roundNumber(converted)} ${String(values.toUnit).toLowerCase()}` : 'Speed conversion requires valid units.';
+    }
+    case 'temperature-unit-convert': {
+      const amount = getCalculatorValue(values, 'value');
+      const converted = convertTemperatureUnits(amount, values.fromUnit, values.toUnit);
+      return `Converted value: ${roundNumber(converted)} ${String(values.toUnit).toLowerCase()}`;
+    }
+    case 'data-unit-convert': {
+      const amount = getCalculatorValue(values, 'value');
+      const converted = convertLinearUnits(amount, values.fromUnit, values.toUnit, unitConversionMaps.data);
+      return converted !== null ? `Converted value: ${roundNumber(converted)} ${String(values.toUnit).toLowerCase()}` : 'Data conversion requires valid units.';
+    }
+    case 'energy-convert': {
+      const amount = getCalculatorValue(values, 'value');
+      const converted = convertLinearUnits(amount, values.fromUnit, values.toUnit, unitConversionMaps.energy);
+      return converted !== null ? `Converted value: ${roundNumber(converted)} ${String(values.toUnit).toLowerCase()}` : 'Energy conversion requires valid units.';
+    }
+    case 'pressure-convert': {
+      const amount = getCalculatorValue(values, 'value');
+      const converted = convertLinearUnits(amount, values.fromUnit, values.toUnit, unitConversionMaps.pressure);
+      return converted !== null ? `Converted value: ${roundNumber(converted)} ${String(values.toUnit).toLowerCase()}` : 'Pressure conversion requires valid units.';
+    }
+    case 'angle-convert': {
+      const amount = getCalculatorValue(values, 'value');
+      const converted = convertLinearUnits(amount, values.fromUnit, values.toUnit, unitConversionMaps.angle);
+      return converted !== null ? `Converted value: ${roundNumber(converted)} ${String(values.toUnit).toLowerCase()}` : 'Angle conversion requires valid units.';
+    }
+    case 'frequency-convert': {
+      const amount = getCalculatorValue(values, 'value');
+      const converted = convertLinearUnits(amount, values.fromUnit, values.toUnit, unitConversionMaps.frequency);
+      return converted !== null ? `Converted value: ${roundNumber(converted)} ${String(values.toUnit).toLowerCase()}` : 'Frequency conversion requires valid units.';
+    }
+    case 'power-convert': {
+      const amount = getCalculatorValue(values, 'value');
+      const converted = convertLinearUnits(amount, values.fromUnit, values.toUnit, unitConversionMaps.power);
+      return converted !== null ? `Converted value: ${roundNumber(converted)} ${String(values.toUnit).toLowerCase()}` : 'Power conversion requires valid units.';
+    }
     case 'temperature-convert': {
+      if (values.amount !== undefined && values.amount !== '' && values.fromUnit && values.toUnit) {
+        const converted = convertTemperatureUnits(values.amount, values.fromUnit, values.toUnit);
+        return `Converted value: ${roundNumber(converted)} ${String(values.toUnit).toLowerCase()}`;
+      }
+
       const celsius = Number(values.celsius);
       return `Fahrenheit: ${roundNumber((celsius * 9) / 5 + 32)} | Kelvin: ${roundNumber(celsius + 273.15)}`;
     }
